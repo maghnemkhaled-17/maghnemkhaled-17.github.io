@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Design Graphique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 100px 20px 60px;
+            background: linear-gradient(135deg, #0a192f, #172a45);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 60px 20px;
+            background-color: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #0a192f;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .section-description {
+            text-align: center;
+            color: #4b5563;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        /* CATEGORY SECTIONS */
+        .category-section {
+            padding: 40px 0;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: #0a192f;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            display: inline-block;
+        }
+
+        /* GRID CARDS */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            height: 350px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-info {
+            padding: 15px;
+            height: 25%;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-info p {
+            color: #0a192f;
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+.contact {
+      background: linear-gradient(135deg, #0a192f, #172a45);
+      color: white;
+      text-align: center;
+    }
+
+    .contact h2 {
+      color: white;
+    }
+
+    .contact h2::after {
+      background: #d4af37;
+    }
+
+    .contact p {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .social-btn:hover {
+      background: #d4af37;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+        /* FOOTER */
+        footer {
+            background: #0a192f;
+            color: #cbd5e1;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item i {
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #2d3748;
+            font-size: 0.9rem;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+        .card:nth-child(5) { animation-delay: 0.4s; }
+        .card:nth-child(6) { animation-delay: 0.5s; }
+        .card:nth-child(7) { animation-delay: 0.6s; }
+        .card:nth-child(8) { animation-delay: 0.7s; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 25px;
+            }
+            
+            header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 80px 15px 50px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>DESIGN GRAPHIQUE</h1>
+            <p>I use my creativity and prompting skills to create unique, modern and elegant designs</p>
+            <p class="tagline"><i class="fas fa-paint-brush"></i> Creative design with <span class="highlight">IA</span> | <i class="fas fa-bolt"></i> SPEED and <span class="highlight">efficiency</span> | <i class="fas fa-lightbulb"></i> <span class="highlight">Technological </span> innovation</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: LOGO -->
+        <section id="logo">
+            <div class="container">
+                <h2 class="section-title">LOGOS</h2>
+                <p class="section-description">Creating professional logos with the help of <span class="highlight">IA</span> to offer <span class="highlight">speed, creativity</span> and <span class="highlight">efficiency</span> in terms of costs. AI-powered design tools can instantly generate multiple unique logo concepts tailored to your brand identity.</p>
+                
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/logo/logo1.png" alt="Logo Luxueux">
+                        </div>
+                        <div class="card-info">
+                            <p>Luxury Logo for Clothing Brand</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/logo/logo2.png" alt="Logo Moderne">
+                        </div>
+                        <div class="card-info">
+                            <p>Modern Logo for Technology Startup</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/logo/logo3.png" alt="Logo Desktop">
+                        </div>
+                        <div class="card-info">
+                            <p>Logo for AI company</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/logo/logo4.png" alt="Logo Luxueux Vêtements">
+                        </div>
+                        <div class="card-info">
+                            <p>Luxurious Logo for Clothing Store</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: PUB / CRÉATIFS -->
+        <section id="pub" class="category-section">
+            <div class="container">
+                <h2 class="section-title">ADS & CREATIVES</h2>
+                <p class="section-description">Creating ads and creative content with AI to deliver <span class="highlight">attractive designs</span>, une <span class="highlight">adaptabilité</span> aux différents publics et une <span class="highlight">cohérence</span> dans les campagnes.</p>
+                <p class="section-subtitle">product <span class="highlight">+</span>  Professionnal prompt <span class="highlight">=</span> <span class="highlight">Unlimited Creativity</span></p>
+                
+                <h3 class="category-title">ACCESSORIES</h3>
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/watch/watch1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                      <div class="card">
+                        <div class="card-img">
+                            <img src="../image/watch/watch2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/watch/watch3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/watch/watch5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">UGC CONTENT</h3>
+                <p class="section-subtitle">Producing authentic, user-style content that resonates with audiences</p>
+                <div class="cards-container">
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/bag/bag2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/bag/bag3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/bag/bag4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/bag/bag5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">ILLUSTRATIONS</h3>
+                <div class="cards-container">
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/pc/pc1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/pc/pc2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                       <div class="card">
+                        <div class="card-img">
+                            <img src="../image/pc/pc3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/pc/pc4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">COSMETICS</h3>
+                <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/clear/clear1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/clear/clear2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/clear/clear3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/clear/clear4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/shampoo/shampoo1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/shampoo/shampoo2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/shampoo/shampoo3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/shampoo/shampoo5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">HAIR MASKS</h3>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hairmask/hairmask1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hairmask/hairmask5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hairmask/hairmask3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hairmask/hairmask4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                <h3 class="category-title">BRANDING</h3>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/BIMO/Gemini_Generated_Image_j5sew5j5sew5j5se.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/BIMO/Gemini_Generated_Image_nb81a0nb81a0nb81.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/BIMO/Gemini_Generated_Image_oadfe3oadfe3oadf.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/BIMO/Gemini_Generated_Image_w9hq0zw9hq0zw9hq.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/caprise/Gemini_Generated_Image_wkp548wkp548wkp5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/caprise/Gemini_Generated_Image_civwxacivwxacivw.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/caprise/Gemini_Generated_Image_hh8ebshh8ebshh8e.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/caprise/Gemini_Generated_Image_mjzmrsmjzmrsmjzm.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hamoud/Gemini_Generated_Image_cgp1f6cgp1f6cgp1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hamoud/Gemini_Generated_Image_w9kcqtw9kcqtw9kc.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hamoud/hamoud2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/hamoud/hamoud4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/icecream/ice5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/icecream/ice2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/icecream/ice3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/icecream/ice4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/kool break/Gemini_Generated_Image_86dnk586dnk586dn.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/kool break/Gemini_Generated_Image_wwk1rywwk1rywwk1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/kool break/Gemini_Generated_Image_g23cpeg23cpeg23c.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/kool break/Gemini_Generated_Image_v6u2bv6u2bv6u2bv.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/MOMENT/Gemini_Generated_Image_1xf71k1xf71k1xf7.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/MOMENT/Gemini_Generated_Image_56ddvn56ddvn56dd.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/MOMENT/Gemini_Generated_Image_5y66s5y66s5y66s5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/MOMENT/Gemini_Generated_Image_urbdpturbdpturbd.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rifkus/rifkus1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rifkus/rifkus2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rifkus/rifkus5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rifkus/rifkus4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rouiba/Gemini_Generated_Image_c9ic40c9ic40c9ic.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rouiba/Gemini_Generated_Image_ici285ici285ici2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rouiba/Gemini_Generated_Image_t4l1ymt4l1ymt4l1.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/rouiba/Gemini_Generated_Image_ywvatoywvatoywva.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/sim/Gemini_Generated_Image_4ha4as4ha4as4ha4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/sim/Gemini_Generated_Image_72uskx72uskx72us.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/sim/Gemini_Generated_Image_7l0kfn7l0kfn7l0k.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/sim/Gemini_Generated_Image_yyghpsyyghpsyygh.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+        <!-- Section 3: BANNERS -->
+        <section id="banners">
+            <div class="container">
+                <h2 class="section-title">BANNERS</h2>
+          <h3 class="category-title">album cover</h3>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/album/album2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/album/album5.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/album/album4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">youtube thumbnails</h3>
+                 <div class="cards-container">
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/youtube/youtube2.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/youtube/youtube3.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-img">
+                            <img src="../image/youtube/youtube4.png" alt="Montre 1">
+                        </div>
+                        <div class="card-info">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="category-title">AFFICHES D'ÉVÉNEMENT</h3>
+                <div class="cards-container">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/event/event1.png" alt="Event 1">
+                        </div>
+                        <div class="card-info">
+                            <p>Affiche Événement 1</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/event/event2.png" alt="Event 2">
+                        </div>
+                        <div class="card-info">
+                            <p>Affiche Événement 2</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="../image/event/event3.png" alt="Event 3">
+                        </div>
+                        <div class="card-info">
+                            <p>Affiche Événement 3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="contact" class="contact">
+    <div class="container">
+      <h2>CONTACTEZ-MOI</h2>
+      <p>Intéressé par mes services ? N'hésitez pas à me contacter pour discuter de votre projet ou poser des questions.</p>
+      <div class="social-links">
+        <a href="mailto:maghnemkhaled@gmail.com" class="social-btn" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://wa.me/+213659350117" target="_blank" class="social-btn" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://linkedin.com/in/khaledmaghnem" target="_blank" class="social-btn" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/maghnemkhaled-17" target="_blank" class="social-btn" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://instagram.com/khaledmaghnem" target="_blank" class="social-btn" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://tiktok.com/@khaledmaghnem" target="_blank" class="social-btn" title="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; created by  |  all rights are reserved .</p>
+    </div>
+  </footer>
+</body>
+</html>

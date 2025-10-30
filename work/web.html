@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Projets Web</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 100px 20px 60px;
+            background: linear-gradient(135deg, #0a192f, #172a45);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* PROJECT GRID */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 60px 20px;
+        }
+
+        /* CARD BASE */
+        .project-card {
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* IMAGE */
+        .project-image {
+            width: 100%;
+            height: 65%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        /* OVERLAY */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .overlay p {
+            color: #e6e6e6;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTON */
+        .btn-center {
+            display: inline-block;
+            background: #d4af37;
+            color: white;
+            font-size: 1rem;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+        }
+
+        .btn-center:hover {
+            background: transparent;
+            color: #d4af37;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* INFO BOX */
+        .project-info {
+            padding: 20px;
+            height: 35%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-info h3 {
+            color: #0a192f;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .project-info p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-item {
+            background: #eef2f7;
+            color: #0a192f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+ /* CONTACT SECTION */
+    .contact {
+      background: linear-gradient(135deg, #0a192f, #172a45);
+      color: white;
+      text-align: center;
+    }
+
+    .contact h2 {
+      color: white;
+    }
+
+    .contact h2::after {
+      background: #d4af37;
+    }
+
+    .contact p {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .social-btn:hover {
+      background: #d4af37;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0a192f;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.9rem;
+    }
+
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            
+            header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .project-card {
+                height: 380px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 80px 15px 50px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 40px 15px;
+            }
+            
+            .project-card {
+                height: 420px;
+            }
+        }
+
+        /* ANIMATION */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .project-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(2) { animation-delay: 0.1s; }
+        .project-card:nth-child(3) { animation-delay: 0.2s; }
+        .project-card:nth-child(4) { animation-delay: 0.3s; }
+        .project-card:nth-child(5) { animation-delay: 0.4s; }
+        .project-card:nth-child(6) { animation-delay: 0.5s; }
+        .project-card:nth-child(7) { animation-delay: 0.6s; }
+        .project-card:nth-child(8) { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>WEB PROJECTS</h1>
+            <p>Full-stack web development specialist with expertise in UI/UX design, data management and security</p>
+            <p class="tagline"><i class="fas fa-code"></i> Design and Structuring / <i class="fas fa-mobile-alt"></i> Responsibility / <i class="fas fa-server"></i> Backend / <i class="fas fa-database"></i> Data Management / <i class="fas fa-shield-alt"></i> Security</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="projects-grid">
+            <!-- Projet 1 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../WEBSITE/cupecake/visualisation.png" alt="Application de gestion de cupcakes">
+                </div>
+                <div class="overlay">
+                    <h3>COIN DES SAVEUR</h3>
+                    <p>WEB SITE</p>
+                    <a href="../WEBSITE/cupecake/home.html" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>COIN DES SAVEUR</h3>
+                    <div class="tech-stack">
+                        <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">REACT.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 2 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../WEBSITE/ebook/visuel.jpeg" alt="Plateforme d'ebooks">
+                </div>
+                <div class="overlay">
+                    <h3>E-BOOK</h3>
+                    <p>LANDING PAGE</p>
+                    <a href="../WEBSITE/ebook/landing_ebook.html" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>THE ULTIMATE PROMPT GUIDE</h3>
+                    <div class="tech-stack">
+                         <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">REACT.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 3 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../WEBSITE/gestion des courries/Annotation 2025-10-01 145331.png" alt="Système de gestion de courriers">
+                </div>
+                <div class="overlay">
+                    <h3>Mail Manager</h3>
+                    <p>WEB APPLICATION</p>
+                    <a href="../WEBSITE/gestion des courries/courrier.html" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>GESTION DES COURRIER</h3>
+                    <div class="tech-stack">
+                        <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">PHP</span>
+                        <span class="tech-item">SQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 4 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../WEBSITE/ebook2/visuel.png" alt="Nouvelle plateforme d'ebooks">
+                </div>
+                <div class="overlay">
+                    <h3>E-BOOK</h3>
+                    <P>LANDING PAGE</P>         
+                     <a href="../WEBSITE/ebook2/index.html" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>AI WEALTH GENERATION MONEY</h3>
+                        <div class="tech-stack">
+                        <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">REACT.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 5 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../WEBSITE/application/VISU.png" alt="Application de gestion">
+                </div>
+                <div class="overlay">
+                    <h3>mobile apk</h3>
+                    <p>web site</p>
+                    <a href="../WEBSITE/application/index.html" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>NOVAMIND</h3>      
+                    <div class="tech-stack">
+                        <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">REACT.JS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 6 -->
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="../VISUALISATION.png" alt="Site de portfolio">
+                </div>
+                <div class="overlay">
+                    <h3>PORTFOLIO Pro</h3>
+                    <p>MY PORTFOLIO</p>
+                    <a href="#" class="btn-center">VIEW</a>
+                </div>
+                <div class="project-info">
+                    <h3>KHALED MAGHNEM</h3>
+                    <div class="tech-stack">
+                        <span class="tech-item">HTML</span>
+                        <span class="tech-item">CSS</span>
+                        <span class="tech-item">JAVA SCRIPT</span>
+                        <span class="tech-item">GSAP</span>
+                        <span class="tech-item">REACT.JS</span>
+                    </div>
+                </div>
+            </div>
+
+           
+
+        </section>
+    </main>
+<section id="contact" class="contact">
+    <div class="container">
+      <h2>CONTACTEZ-MOI</h2>
+      <p>Intéressé par mes services ? N'hésitez pas à me contacter pour discuter de votre projet ou poser des questions.</p>
+      <div class="social-links">
+        <a href="mailto:maghnemkhaled@gmail.com" class="social-btn" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://wa.me/+213659350117" target="_blank" class="social-btn" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://linkedin.com/in/khaledmaghnem" target="_blank" class="social-btn" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/maghnemkhaled-17" target="_blank" class="social-btn" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://instagram.com/khaledmaghnem" target="_blank" class="social-btn" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://tiktok.com/@khaledmaghnem" target="_blank" class="social-btn" title="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; created by  |  all rights are reserved .</p>
+    </div>
+  </footer>
+</body>
+</html>

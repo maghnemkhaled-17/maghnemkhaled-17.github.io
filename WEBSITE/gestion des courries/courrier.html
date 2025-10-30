@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gestion des courriers — prototype</title>
+  <style>
+    :root{
+      --bg:#0a0a0a; /* noir */
+      --accent:#ff7a18; /* orange */
+      --muted:#f5f5f5; /* blanc cassé */
+      --card:#0f0f0f;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#020202 0%, #0f0f0f 100%);color:var(--muted)}
+    .app{max-width:1100px;margin:28px auto;padding:20px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff9f4a);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
+    .title{font-size:18px;font-weight:700}
+    nav{display:flex;gap:10px}
+    .nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .nav-btn.active{background:linear-gradient(90deg, rgba(255,122,24,0.12), rgba(255,122,24,0.06));border-color:rgba(255,122,24,0.25)}
+
+    main{display:grid;grid-template-columns:1fr;gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+
+    form .row{display:flex;gap:12px;margin-bottom:12px}
+    label{font-size:13px;color:rgba(245,245,245,0.8);display:block;margin-bottom:6px}
+    input[type=text], input[type=datetime-local], select, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:var(--glass);color:var(--muted);outline:none}
+    textarea{min-height:100px;resize:vertical}
+    .small{width:200px;min-width:160px}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:#111;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
+    .muted{color:rgba(245,245,245,0.6);font-size:13px}
+
+    /* history */
+    table{width:100%;border-collapse:collapse}
+    thead th{text-align:left;padding:12px;border-bottom:1px dashed rgba(255,255,255,0.04);font-size:13px;color:rgba(245,245,245,0.8)}
+    tbody td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:700}
+    .tag.out{background:rgba(255,122,24,0.12);color:var(--accent)}
+    .tag.in{background:rgba(90,255,150,0.06);color:#9ff5b3}
+
+    /* responsive */
+    @media(max-width:880px){
+      .row{flex-direction:column}
+      .small{width:100%}
+      header{flex-direction:column;align-items:flex-start}
+    }
+
+    /* small helper */
+    .flex{display:flex;gap:10px;align-items:center}
+    .right{margin-left:auto}
+
+    /* animation */
+    .fade{opacity:0;transform:translateY(6px);transition:all .36s ease}
+    .fade.show{opacity:1;transform:none}
+
+    footer{margin-top:18px;color:rgba(245,245,245,0.5);font-size:13px;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="logo">GC</div>
+        <div>
+          <div class="title">Gestionnaire de courriers — Prototype</div>
+          <div class="muted">Thème : noir / orange / blanc — Compte unique (prototype statique)</div>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-target="out">Courriers départ</button>
+        <button class="nav-btn" data-target="in">Courriers arrivé</button>
+        <button class="nav-btn" data-target="history">Historique</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- OUTGOING -->
+      <section id="out" class="card fade show">
+        <h3>Courrier de départ</h3>
+        <form id="form-out">
+          <div class="row">
+            <div style="flex:1">
+              <label>Date et heure</label>
+              <input type="datetime-local" id="out-datetime" required />
+            </div>
+            <div class="small">
+              <label>Numéro de courrier</label>
+              <input type="text" id="out-number" readonly />
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Destinataire</label>
+              <select id="out-to" required></select>
+            </div>
+            <div style="flex:1">
+              <label>En copie (optionnel)</label>
+              <select id="out-cc" multiple></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Division / direction</label>
+              <select id="out-division" required></select>
+            </div>
+            <div style="flex:1">
+              <label>Département</label>
+              <select id="out-dept"></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Objet</label>
+              <input type="text" id="out-subject" required />
+            </div>
+            <div style="width:220px">
+              <label>Pièce jointe (PDF)</label>
+              <input type="file" id="out-file" accept="application/pdf" />
+            </div>
+          </div>
+
+          <details style="margin-bottom:12px;background:transparent;padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.02)">
+            <summary style="cursor:pointer;color:var(--muted)">Classement (dossier / sous-dossier)</summary>
+            <div style="margin-top:10px">
+              <div class="row">
+                <div style="flex:1">
+                  <label>Dossier</label>
+                  <input type="text" id="out-dossier" placeholder="Ex: RH, Finances..." />
+                </div>
+                <div style="flex:1">
+                  <label>Sous-dossier</label>
+                  <input type="text" id="out-sous" placeholder="Ex: Contrats, Factures..." />
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <div class="actions">
+            <button class="btn" type="submit">Enregistrer</button>
+            <button class="btn secondary" type="button" id="out-print">Imprimer</button>
+            <div class="muted right" id="out-status"></div>
+          </div>
+        </form>
+      </section>
+
+      <!-- INCOMING -->
+      <section id="in" class="card fade" style="display:none">
+        <h3>Courrier d'arrivée</h3>
+        <form id="form-in">
+          <div class="row">
+            <div style="flex:1">
+              <label>Date et heure</label>
+              <input type="datetime-local" id="in-datetime" required />
+            </div>
+            <div class="small">
+              <label>Numéro de courrier</label>
+              <input type="text" id="in-number" readonly />
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Référence (interne)</label>
+              <input type="text" id="in-ref" />
+            </div>
+            <div style="flex:1">
+              <label>Expéditeur</label>
+              <select id="in-from" required></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Division / direction</label>
+              <select id="in-division" required></select>
+            </div>
+            <div style="flex:1">
+              <label>Département</label>
+              <select id="in-dept"></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Objet</label>
+              <input type="text" id="in-subject" required />
+            </div>
+            <div style="width:220px">
+              <label>Pièce jointe (PDF)</label>
+              <input type="file" id="in-file" accept="application/pdf" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="submit">Enregistrer</button>
+            <button class="btn secondary" type="button" id="in-print">Imprimer</button>
+            <div class="muted right" id="in-status"></div>
+          </div>
+        </form>
+      </section>
+
+      <!-- HISTORY -->
+      <section id="history" class="card fade" style="display:none">
+        <h3>Historique des courriers</h3>
+        <div style="overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Numéro</th>
+                <th>Date &amp; heure</th>
+                <th>Type</th>
+                <th>Destinataire / Expéditeur</th>
+                <th>Objet</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <button class="btn secondary" id="clear-storage">Réinitialiser prototype</button>
+          <div class="muted">Les données sont stockées localement (localStorage).</div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>Prototype statique — enregistrement local uniquement • Thème noir / orange / blanc</footer>
+  </div>
+
+  <script>
+    /* --- sample data --- */
+    const SAMPLE_USERS = [
+      'Service RH', 'Direction Générale', 'Comptabilité', 'Service Juridique', 'Logistique', 'Client Externe'
+    ];
+    const SAMPLE_DIVS = ['Direction générale','Direction financière','Direction technique','Direction commerciale'];
+    const SAMPLE_DEPTS = ['Administration','Paie','Achats','Maintenance','Marketing'];
+
+    /* --- utilities --- */
+    function $(s){return document.querySelector(s)}
+    function $all(s){return document.querySelectorAll(s)}
+
+    /* populate selects */
+    function populate(){
+      const to = $('#out-to'), cc = $('#out-cc'), from = $('#in-from');
+      [to,cc,from].forEach(sel=>{sel.innerHTML=''});
+      SAMPLE_USERS.forEach(u=>{
+        const o = new Option(u,u);
+        to.add(o.cloneNode(true));
+        from.add(o.cloneNode(true));
+        cc.add(o.cloneNode(true));
+      });
+      const od = $('#out-division'), id = $('#in-division');
+      [od,id].forEach(s=>s.innerHTML='');
+      SAMPLE_DIVS.forEach(d=>{od.add(new Option(d,d)); id.add(new Option(d,d));});
+      const opd = $('#out-dept'), ipd = $('#in-dept');
+      [opd,ipd].forEach(s=>s.innerHTML='');
+      SAMPLE_DEPTS.forEach(d=>{opd.add(new Option(d,d)); ipd.add(new Option(d,d));});
+    }
+
+    /* date/time helpers */
+    function nowLocalDatetimeInput(){
+      const d = new Date();
+      // to yyyy-mm-ddThh:mm
+      const pad = n=>String(n).padStart(2,'0');
+      const s = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      return s;
+    }
+
+    /* storage keys */
+    const KEY_COUNTER_OUT = 'gc_counter_out_v1';
+    const KEY_COUNTER_IN = 'gc_counter_in_v1';
+    const KEY_MAILS = 'gc_mails_v1';
+
+    function nextCounter(key, start=1000){
+      let c = parseInt(localStorage.getItem(key)||0,10);
+      if(!c){c=start}
+      c = c + 1;
+      localStorage.setItem(key,c);
+      return c;
+    }
+
+    function formatDateReadable(iso){
+      const d = new Date(iso);
+      return d.toLocaleString();
+    }
+
+    /* save mail */
+    function saveMail(mail){
+      const arr = JSON.parse(localStorage.getItem(KEY_MAILS)||'[]');
+      arr.unshift(mail); // newest first
+      localStorage.setItem(KEY_MAILS, JSON.stringify(arr));
+      renderHistory();
+    }
+
+    /* render history */
+    function renderHistory(){
+      const body = $('#history-body');
+      const arr = JSON.parse(localStorage.getItem(KEY_MAILS)||'[]');
+      body.innerHTML = '';
+      if(!arr.length){
+        body.innerHTML = `<tr><td colspan="6" class="muted">Aucun courrier enregistré.</td></tr>`;
+        return;
+      }
+      arr.forEach(item=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.number}</td>
+          <td>${formatDateReadable(item.datetime)}</td>
+          <td><span class="tag ${item.type==='départ'?'out':'in'}">${item.type}</span></td>
+          <td>${item.type==='départ'?item.to:item.from}</td>
+          <td>${escapeHtml(item.subject)}</td>
+          <td>
+            <button class="nav-btn" data-action="view" data-id="${item.id}">Voir</button>
+            <button class="nav-btn" data-action="print" data-id="${item.id}">Imprimer</button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>\"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
+    function openPrintable(item){
+      const html = `
+        <html><head><meta charset="utf-8"><title>Impression - ${item.number}</title>
+        <style>body{font-family:Arial,Helvetica,sans-serif;color:#111;padding:28px}h2{color:#ff7a18}table{width:100%;border-collapse:collapse}td{padding:8px;border-bottom:1px solid #ddd}</style>
+        </head><body>
+        <h2>Courrier ${escapeHtml(item.type)} — ${escapeHtml(item.number)}</h2>
+        <table>
+          <tr><td><strong>Date &amp; heure</strong></td><td>${escapeHtml(formatDateReadable(item.datetime))}</td></tr>
+          <tr><td><strong>Type</strong></td><td>${escapeHtml(item.type)}</td></tr>
+          <tr><td><strong>Destinataire / Expéditeur</strong></td><td>${escapeHtml(item.type==='départ'?item.to:item.from)}</td></tr>
+          <tr><td><strong>Division</strong></td><td>${escapeHtml(item.division||'')}</td></tr>
+          <tr><td><strong>Département</strong></td><td>${escapeHtml(item.dept||'')}</td></tr>
+          <tr><td><strong>Objet</strong></td><td>${escapeHtml(item.subject||'')}</td></tr>
+          <tr><td><strong>Dossier</strong></td><td>${escapeHtml(item.dossier||'')}</td></tr>
+        </table>
+        <div style="margin-top:22px;color:#666;font-size:13px">Prototype statique — pas de pièces jointes imprimées (stockées localement uniquement).</div>
+        </body></html>
+      `;
+      const w = window.open('','_blank');
+      w.document.write(html);
+      w.document.close();
+      w.focus();
+      setTimeout(()=>w.print(),300);
+    }
+
+    /* initialise forms */
+    function initForms(){
+      populate();
+      // set default datetimes
+      $('#out-datetime').value = nowLocalDatetimeInput();
+      $('#in-datetime').value = nowLocalDatetimeInput();
+      // set numbers (read from storage or generate)
+      const currentOut = parseInt(localStorage.getItem(KEY_COUNTER_OUT)||'1000',10)+1;
+      const currentIn = parseInt(localStorage.getItem(KEY_COUNTER_IN)||'2000',10)+1;
+      $('#out-number').value = 'D-'+currentOut;
+      $('#in-number').value = 'A-'+currentIn;
+
+      // forms submit
+      $('#form-out').addEventListener('submit', e=>{
+        e.preventDefault();
+        const mail = {
+          id: 'm_'+Date.now(),
+          type: 'départ',
+          datetime: new Date($('#out-datetime').value).toISOString(),
+          number: $('#out-number').value,
+          to: $('#out-to').value,
+          cc: Array.from($('#out-cc').selectedOptions).map(o=>o.value),
+          division: $('#out-division').value,
+          dept: $('#out-dept').value,
+          subject: $('#out-subject').value,
+          dossier: $('#out-dossier').value,
+          sous: $('#out-sous').value,
+          file: $('#out-file').files.length?$('#out-file').files[0].name:null
+        };
+        // increment official counter
+        const num = nextCounter(KEY_COUNTER_OUT,1000);
+        mail.number = 'D-'+num;
+        localStorage.setItem('last_saved','out');
+        saveMail(mail);
+        $('#out-status').textContent = 'Enregistré ✓';
+        setTimeout(()=>$('#out-status').textContent='',2200);
+        // refresh number and reset form partially
+        $('#out-number').value = 'D-'+(parseInt(localStorage.getItem(KEY_COUNTER_OUT),10)+1);
+        $('#form-out').reset();
+        $('#out-datetime').value = nowLocalDatetimeInput();
+      });
+
+      $('#form-in').addEventListener('submit', e=>{
+        e.preventDefault();
+        const mail = {
+          id: 'm_'+Date.now(),
+          type: 'arrivé',
+          datetime: new Date($('#in-datetime').value).toISOString(),
+          number: $('#in-number').value,
+          ref: $('#in-ref').value,
+          from: $('#in-from').value,
+          division: $('#in-division').value,
+          dept: $('#in-dept').value,
+          subject: $('#in-subject').value,
+          file: $('#in-file').files.length?$('#in-file').files[0].name:null
+        };
+        const num = nextCounter(KEY_COUNTER_IN,2000);
+        mail.number = 'A-'+num;
+        saveMail(mail);
+        $('#in-status').textContent = 'Enregistré ✓';
+        setTimeout(()=>$('#in-status').textContent='',2200);
+        $('#in-number').value = 'A-'+(parseInt(localStorage.getItem(KEY_COUNTER_IN),10)+1);
+        $('#form-in').reset();
+        $('#in-datetime').value = nowLocalDatetimeInput();
+      });
+
+      // print buttons
+      $('#out-print').addEventListener('click', ()=>{
+        const tmpl = {
+          id: 'tmp_'+Date.now(), type:'départ', datetime:new Date().toISOString(), number:$('#out-number').value,
+          to:$('#out-to').value, division:$('#out-division').value, dept:$('#out-dept').value, subject:$('#out-subject').value, dossier:$('#out-dossier').value
+        };
+        openPrintable(tmpl);
+      });
+      $('#in-print').addEventListener('click', ()=>{
+        const tmpl = {id:'tmp_'+Date.now(), type:'arrivé', datetime:new Date().toISOString(), number:$('#in-number').value, from:$('#in-from').value, division:$('#in-division').value, dept:$('#in-dept').value, subject:$('#in-subject').value};
+        openPrintable(tmpl);
+      });
+
+      // history actions
+      $('#history-body').addEventListener('click', e=>{
+        const btn = e.target.closest('button'); if(!btn) return;
+        const action = btn.dataset.action; const id = btn.dataset.id;
+        const arr = JSON.parse(localStorage.getItem(KEY_MAILS)||'[]');
+        const item = arr.find(x=>x.id===id);
+        if(action==='view' && item){
+          alert(`Détails - ${item.number}\nType: ${item.type}\nSujet: ${item.subject}\nDest/Exp: ${item.type==='départ'?item.to:item.from}`);
+        }
+        if(action==='print' && item){ openPrintable(item); }
+      });
+
+      $('#clear-storage').addEventListener('click', ()=>{
+        if(confirm('Réinitialiser les données du prototype (localStorage) ?')){
+          localStorage.removeItem(KEY_MAILS); localStorage.removeItem(KEY_COUNTER_OUT); localStorage.removeItem(KEY_COUNTER_IN); renderHistory(); initForms();
+        }
+      });
+
+      renderHistory();
+    }
+
+    /* navigation */
+    $all('.nav-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        $all('.nav-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const t = btn.dataset.target;
+        ['out','in','history'].forEach(id=>{ const s = $('#'+id); if(id===t){ s.style.display='block'; s.classList.add('show'); } else { s.style.display='none'; s.classList.remove('show'); } });
+      });
+    });
+
+    // load and init
+    document.addEventListener('DOMContentLoaded', ()=>{
+      initForms();
+      // basic fade in
+      setTimeout(()=>{document.querySelectorAll('.fade').forEach(el=>el.classList.add('show'))},80);
+    });
+  </script>
+</body>
+</html>

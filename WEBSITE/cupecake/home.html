@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Coin des Saveurs</title>
+  <link rel="icon" href="img/logo.png" type="image/png" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <style>
+    /* ===== Theme (white / black / gold) ===== */
+    :root{
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #6d6d6d;
+      --gold: #FFD700;
+      --card-bg: #ffffff;
+      --shadow: rgba(17,17,17,0.08);
+      --radius: 12px;
+      --container: 1150px;
+    }
+
+    /* ===== Base ===== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      scroll-behavior:smooth;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%;height:auto}
+
+    .container{max-width:var(--container);margin:0 auto;padding:0 20px}
+
+    /* ===== NAVBAR ===== */
+    .navbar{
+      position:fixed;left:0;right:0;top:0;z-index:999;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:20px;padding:18px 30px;background:rgba(255,255,255,0.98);
+      box-shadow:0 4px 18px var(--shadow);backdrop-filter: blur(4px);
+    }
+    .nav-left{display:flex;align-items:center;gap:14px}
+    .nav-left .logo-img{height:64px;width:auto}
+    .brand{
+      font-family: "Times New Roman", serif;
+      font-weight:700;
+      font-size:1.35rem;
+      color:var(--gold);
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+    nav ul{display:flex;gap:20px;align-items:center;list-style:none;margin:0;padding:0}
+    nav a{font-weight:600;font-size:0.98rem;color:var(--text);padding:8px 6px;border-radius:6px;transition:color .18s ease}
+    nav a:hover{color:var(--gold)}
+
+    /* NAV mobile */
+    @media (max-width:900px){
+      .navbar{padding:12px 18px}
+      .nav-left .logo-img{height:52px}
+      nav ul{gap:12px}
+    }
+
+    /* ===== HERO ===== */
+    .hero{
+      position:relative;height:92vh;min-height:560px;display:grid;place-items:center;margin-top:10px;overflow:hidden;
+    }
+    .hero video{
+      position:absolute;inset:0;width:100%;height:120%;object-fit:cover;z-index:0;
+    }
+    .hero::after{
+      /* overlay to darken slightly for legibility */
+      content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.08));z-index:1;
+    }
+    .hero-card{
+      position:relative;z-index:2;max-width:980px;margin:0 20px;padding:32px;border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(4px);
+      text-align:center;color:#fff;
+      box-shadow:0 12px 40px rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero h1{margin:0;font-family:"Times New Roman", serif;font-size:2.4rem;letter-spacing:1.2px;color:var(--gold);text-transform:uppercase}
+    .hero p{margin:12px 0 0;font-size:1.05rem;max-width:760px;color:rgba(255,255,255,0.95)}
+    .hero .cta{display:inline-block;margin-top:18px;padding:10px 16px;border-radius:10px;background:var(--gold);color:#111;font-weight:700}
+    .hero .cta:hover{display:inline-block;margin-top:18px;padding:10px 16px;border-radius:10px;background-color: #111;color:gold;font-weight:700}
+
+    @media (max-width:700px){
+      .hero{min-height:64vh}
+      .hero h1{font-size:1.6rem}
+      .hero p{font-size:0.98rem}
+      .hero-card{padding:18px}
+    }
+
+    /* ===== Sections common ===== */
+    section{padding:80px 0}
+    .section-title{font-family:"Times New Roman", serif;font-size:2.2rem;color:var(--text);text-align:center;margin-bottom:22px}
+    .section-title small{display:block;color:var(--muted);font-size:0.92rem;margin-top:8px}
+
+    /* ===== ABOUT ===== */
+    .about-wrap{max-width:var(--container);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+    .about-img{width:680px  ;height:460px;object-fit:cover;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.08)}
+    .about-text{font-size:1.03rem;color:var(--muted);line-height:1.8}
+
+    @media (max-width:900px){.about-wrap{grid-template-columns:1fr}.about-img{height:260px}}
+
+    /* ===== MENU (cards — same style as old) ===== */
+    .menu-grid{max-width:var(--container);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px}
+    .menu-card{
+      display:flex;flex-direction:column;background:var(--card-bg);border-radius:12px;overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,0.08);transition:transform .28s ease,box-shadow .28s ease;
+      border:1px solid rgba(0,0,0,0.04);
+    }
+    .menu-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.12)}
+    .menu-card img{width:100%;height:180px;object-fit:cover;border-bottom:1px solid rgba(0,0,0,0.04)}
+    .menu-card .menu-body{padding:14px}
+    .menu-card h3{margin:6px 0;color:var(--text);font-family:"Times New Roman", serif}
+    .menu-card p{margin:0;color:var(--muted);font-size:0.95rem}
+    .menu-card .price{margin-top:10px;font-weight:700;color:var(--gold)}
+
+    /* ===== GALLERY small cards ===== */
+    .gallery-grid{max-width:var(--container);margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .gallery-item{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.06);transition:transform .25s ease}
+    .gallery-item img{width:100%;height:200px;object-fit:cover;display:block;filter:saturate(1)}
+    .gallery-item:hover{transform:scale(1.03)}
+    .gallery-caption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.45));color:#fff}
+
+    /* ===== CONTACT / FORM ===== */
+    .contact-wrap{width:780px;margin:0 auto;padding:0 20px;position:static ;}
+    .form-card{background:#f7e2b8;border-radius:12px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,0.06)}
+    .form-row{display:flex;gap: 10px;}
+    .form-row .half{flex:2}
+    input,textarea,button{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);font-size:15px;margin-bottom:12px}
+    textarea{min-height:120px;resize:vertical}
+    button{background:var(--gold);border:none;color:#111;font-weight:700;cursor:pointer;border-radius:10px}
+    .contact-info{display:flex;gap:18px;align-items:center;justify-content:center;margin-top:12px;color:var(--muted);font-size:0.95rem}
+
+    @media (max-width:700px){.form-row{flex-direction:column}.about-wrap,.menu-grid,.gallery-grid{padding:0 12px}}
+
+    /* ===== FOOTER ===== */
+    footer{padding:28px 0;background:linear-gradient(to top, #fff, rgba(255,255,255,0.98));text-align:center;border-top:1px solid rgba(0,0,0,0.04)}
+    footer .muted{color:var(--muted);font-size:0.95rem}
+
+    /* focus states */
+    a:focus,input:focus,button:focus{outline:3px solid rgba(255,215,0,0.14);outline-offset:3px}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="nav-left">
+      <img src="img/logo.png" alt="Logo Coin des Saveurs" class="logo-img">
+      <div class="brand">Coin des Saveurs</div>
+    </div>
+
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero" aria-label="Accueil">
+      <video autoplay muted loop playsinline aria-hidden="true">
+        <source src="../cupecake/1.mp4" type="video/mp4"> <!-- ajoute ta vidéo dans src="" plus tard -->
+      </video>
+
+      <div class="hero-card" role="region" aria-label="Intro">
+        <h1>Coin des Saveurs</h1>
+        <p>Où l'élégance rencontre la gourmandise. Nos créations sont faites main, avec des ingrédients choisis.</p>
+        <a class="cta" href="#menu">Voir le menu</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-label="À propos">
+      <div class="section-title container">
+        <div style="font-family:'Times New Roman',serif;font-size:2.4rem;color:var(--text)">À propos</div>
+        <small>La passion de la pâtisserie artisanale</small>
+      </div>
+
+      <div class="about-wrap">
+        <img src="img/visuel.png" alt="Atelier Coin des Saveurs" class="about-img">
+        <div class="about-text">
+          <p><strong>Coin des Saveurs</strong> est né d'une passion pour les instants partagés autour d'une pâtisserie raffinée. Depuis 2024, nous créons des gâteaux, cupcakes et desserts qui racontent une histoire.</p>
+          <p style="margin-top:10px">Des recettes travaillées, des ingrédients sélectionnés et une finition soignée : notre promesse est de sublimer vos événements et petits plaisirs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" aria-label="Menu">
+  <div class="section-title">
+    <div style="font-family:'Times New Roman',serif;color:var(--text)">Notre Menu</div>
+    <small>Des créations pour toutes les occasions</small>
+  </div>
+
+  <!-- React will render here -->
+  <div id="menu-root"></div>
+</section>
+
+
+      <div class="menu-grid" role="list">
+        <!-- Card 1 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/1.jpg" alt="Birthday cake">
+          <div class="menu-body">
+            <h3>Birthday cake</h3>
+            <p>Gâteau personnalisé, tailles et décors sur demande.</p>
+            <div class="price">À partir de 30€</div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/2.jpg" alt="Cheesecake">
+          <div class="menu-body">
+            <h3>Cheesecake</h3>
+            <p>Texture onctueuse et nappage gourmand.</p>
+            <div class="price">À partir de 18€</div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/3.jpg" alt="Cup cake">
+          <div class="menu-body">
+            <h3>Cup cake</h3>
+            <p>Petites douceurs à l'unité ou en boîte.</p>
+            <div class="price">1,50€ / pièce</div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/4.jpg" alt="Wedding cake">
+          <div class="menu-body">
+            <h3>Wedding cake</h3>
+            <p>Pièces artistiques pour célébrer votre jour J.</p>
+            <div class="price">Sur devis</div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/5.jpg" alt="Chocolate cake">
+          <div class="menu-body">
+            <h3>Chocolate cake</h3>
+            <p>Riche et fondant, pour les amoureux du cacao.</p>
+            <div class="price">À partir de 22€</div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/6.jpg" alt="Red velvet cake">
+          <div class="menu-body">
+            <h3>Red velvet</h3>
+            <p>Moelleux et crémeux, finition élégante.</p>
+            <div class="price">À partir de 24€</div>
+          </div>
+        </article>
+      <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/7.jpg" alt="Red velvet cake">
+          <div class="menu-body">
+            <h3>Red velvet</h3>
+            <p>Moelleux et crémeux, finition élégante.</p>
+            <div class="price">À partir de 24€</div>
+          </div>
+        </article>
+       <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/8.jpg" alt="Red velvet cake">
+          <div class="menu-body">
+            <h3>Red velvet</h3>
+            <p>Moelleux et crémeux, finition élégante.</p>
+            <div class="price">À partir de 24€</div>
+          </div>
+        </article>
+     <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/9.jpg" alt="Red velvet cake">
+          <div class="menu-body">
+            <h3>Red velvet</h3>
+            <p>Moelleux et crémeux, finition élégante.</p>
+            <div class="price">À partir de 24€</div>
+          </div>
+        </article>
+        <article class="menu-card" role="listitem">
+          <img src="../cupecake/img/10.jpg" alt="Red velvet cake">
+          <div class="menu-body">
+            <h3>Red velvet</h3>
+            <p>Moelleux et crémeux, finition élégante.</p>
+            <div class="price">À partir de 24€</div>
+          </div>
+        </article>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-label="Contact">
+      <div class="section-title">
+        <div style="font-family:'Times New Roman',serif;color:var(--text)">Contact</div>
+        <small>Commandes & informations</small>
+      </div>
+
+      <div class="contact-wrap">
+        <div class="form-card">
+          <form id="orderForm">
+            <div class="form-row">
+              <div class="half"><input type="text" name="name" placeholder="Votre nom" required></div>
+              <div class="half"><input type="email" name="email" placeholder="Votre email" required></div>
+            </div>
+            <input type="tel" name="phone" placeholder="Téléphone" required>
+            <input type="text" name="item" placeholder="Commande (nom du gâteau ou dessert)" required>
+            <textarea name="notes" placeholder="Détails (saveurs, date, décor...)"></textarea>
+            <button type="submit">Envoyer la commande</button>
+          </form>
+
+          <div class="contact-info" style="margin-top:14px">
+            <div><strong>Email :</strong> <a href="mailto:coindessaveurs@gmail.com">coindessaveurs@gmail.com</a></div>
+            <div><strong>Tél :</strong> <a href="tel:077966862">077966862</a></div>
+            <div><a href="https://wa.me/077966862" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="muted">&copy; <span id="year"></span> Coin des Saveurs — Tous droits réservés.</div>
+    </div>
+  </footer>
+
+  <!-- ===== Scripts: GSAP animations + simple form handler + small behaviors ===== -->
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth highlight for nav (active link) - simple
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+
+    function onScrollNav() {
+      const scrollPos = window.scrollY + window.innerHeight/3;
+      sections.forEach(sec => {
+        const top = sec.offsetTop;
+        const h = sec.offsetHeight;
+        const id = sec.getAttribute('id');
+        const link = document.querySelector('nav a[href="#' + id + '"]');
+        if (!link) return;
+        if (scrollPos >= top && scrollPos < top + h) {
+          navLinks.forEach(a => a.style.opacity = 0.6);
+          link.style.opacity = 1;
+        }
+      });
+    }
+    window.addEventListener('scroll', onScrollNav, {passive:true});
+    onScrollNav();
+
+    // Form handler (placeholder) - replace with backend
+    document.getElementById('orderForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = this.name.value || '';
+      alert('Commande reçue — merci ' + name + ' ! Nous vous contactons bientôt.');
+      this.reset();
+    });
+
+    // GSAP animations (run after GSAP loaded)
+    window.addEventListener('load', () => {
+      if (typeof gsap === 'undefined') {
+        console.warn('GSAP non chargé');
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero card entrance
+      gsap.from('.hero-card', { y: 40, opacity: 0, duration: 1.0, ease: 'power3.out' });
+
+      // Menu cards reveal staggered
+      gsap.from('.menu-card', {
+        y: 30, opacity: 0, duration: 0.9, stagger: 0.12,
+        scrollTrigger: { trigger: '#menu', start: 'top 85%' }
+      });
+
+      // About image and text
+      gsap.from('.about-img', {
+        x: -40, opacity: 0, duration: 0.9,
+        scrollTrigger: { trigger: '#about', start: 'top 85%' }
+      });
+      gsap.from('.about-text', {
+        x: 40, opacity: 0, duration: 0.9, delay: 0.12,
+        scrollTrigger: { trigger: '#about', start: 'top 85%' }
+      });
+
+      // Gallery items
+      gsap.from('.gallery-item', {
+        scale: 0.98, opacity: 0, duration: 0.9, stagger: 0.08,
+        scrollTrigger: { trigger: '#gallery', start: 'top 90%' }
+      });
+
+      // Contact form
+      gsap.from('.form-card', {
+        y: 40, opacity: 0, duration: 0.9,
+        scrollTrigger: { trigger: '#contact', start: 'top 85%' }
+      });
+
+      // Subtle parallax on hero video
+      gsap.to('.hero video', {
+        scale: 1.06, ease: 'none',
+        scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: 0.6 }
+      });
+    });
+  </script>
+  <!-- React + ReactDOM + Babel -->
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Root for React -->
+<div id="react-root"></div>
+
+<!-- Your React code -->
+<script type="text/babel" src="react-app.js"></script>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio | MAGHNEM KHALED</title>
+  <meta author="maghnem khaled">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(135deg, #0a192f, #172a45);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background:#0a192f ;
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #d4af37;
+  
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-menu li a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+      font-size: 1.1rem;
+    }
+
+    .nav-menu li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #d4af37;
+      transition: width 0.3s;
+    }
+
+    .nav-menu li a:hover {
+      color: #d4af37;
+    }
+
+    .nav-menu li a:hover::after {
+      width: 100%;
+    }
+
+    /* SECTIONS */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 100px 20px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      color: #0a192f;
+      font-weight: 700;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: #d4af37;
+      border-radius: 2px;
+    }
+
+    /* ABOUT SECTION */
+    .about {
+      background-color: #f8fafc;
+    }
+
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .about-img-container {
+      flex: 1;
+      min-width: 300px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .about-img:hover {
+      transform: scale(1.03);
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-text h3 {
+      font-size: 1.8rem;
+      color: #0a192f;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #4b5563;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .highlight {
+      color: #d4af37;
+      font-weight: 600;
+    }
+
+    /* SKILLS SECTION */
+    .skills {
+      background-color: #f0f7ff;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .skill-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .skill-icon {
+      font-size: 3rem;
+      color: #0a192f;
+      margin-bottom: 20px;
+    }
+
+    .skill-card h3 {
+      font-size: 1.4rem;
+      color: #0a192f;
+      margin-bottom: 15px;
+    }
+
+    .skill-card p {
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    /* WORK SECTION */
+    .work {
+      background-color: #f9f9ff;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    .work-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.4s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .work-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-content {
+      padding: 25px;
+    }
+
+    .work-content h3 {
+      font-size: 1.5rem;
+      color: #0a192f;
+      margin-bottom: 10px;
+    }
+
+    .work-content p {
+      color: #64748b;
+      margin-bottom: 15px;
+    }
+
+    .work-btn {
+      display: inline-block;
+      background: #0a192f;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .work-btn:hover {
+      background: #d4af37;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* CONTACT SECTION */
+    .contact {
+      background: linear-gradient(135deg, #0a192f, #172a45);
+      color: white;
+      text-align: center;
+    }
+
+    .contact h2 {
+      color: white;
+    }
+
+    .contact h2::after {
+      background: #d4af37;
+    }
+
+    .contact p {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .social-btn:hover {
+      background: #d4af37;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0a192f;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.9rem;
+    }
+
+    /* ANIMATION */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-content > * {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .about-text {
+      animation-delay: 0.2s;
+    }
+
+    .skills-grid > * {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .skills-grid > *:nth-child(2) { animation-delay: 0.1s; }
+    .skills-grid > *:nth-child(3) { animation-delay: 0.2s; }
+    .skills-grid > *:nth-child(4) { animation-delay: 0.3s; }
+
+    .work-grid > * {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .work-grid > *:nth-child(2) { animation-delay: 0.1s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-content {
+        flex-direction: column;
+      }
+      
+      header h1 {
+        font-size: 2.8rem;
+      }
+      
+      h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        padding: 80px 15px 50px;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      section {
+        padding: 80px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div ><a class="logo" href="#about">KHALED MAGHNEM</a></div>
+      <ul class="nav-menu">
+        <li><a href="#about">WHO I'M ?</a></li>
+        <li><a href="#skills">MY SKILLS</a></li>
+        <li><a href="#work">MY WORK</a></li>
+        <li><a href="#contact">CONTACT ME</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header>
+    <div class="container">
+      <h1>MAGHNEM KHALED</h1>
+      <p>Web Developer & Graphic Designer passionate about creating unique digital experiences</p>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-img-container">
+          <img src="image/profile pic.png" alt="Khaled Maghnem" class="about-img">
+        </div>
+        <div class="about-text">
+          <h3>ABOUT ME</h3>
+          <p>Hello! I'm <SPan style="color: goldenrod;">Khaled Maghnem</SPan>, a versatile digital professional specializing in web development, graphic design, video editing, and AI prompt engineering.
+          <p>With a solid foundation in both technology and creativity, I combine design, functionality, and innovation to deliver solutions that are not only visually appealing but also highly effective.</p>
+          <p>By integrating artificial intelligence into my workflow, I optimize creativity and efficiency, ensuring that each project benefits from smarter processes and better results.</p>
+          <p>Passionate, confident, and detail-oriented, I approach each project with a commitment to exceeding expectations and creating results that have a real impact.</p>
+                  </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2>MY SKILLS</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>WEB DEVLOPPEMENT</h3>
+          <p>Creation of modern websites and web applications with HTML, CSS, JavaScript, React, Node.js, GSAP</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <h3>GRAPHIC DESIGN</h3>
+          <p>Creation of visual identities, logos, models and communication media</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>VIDEO EDITING</h3>
+          <P>Production and editing of video content for different media and platforms</P>   
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>IA & PROMPTING</h3>
+          <p>Optimizing workflows with AI tools and creating PROFESSIONAL prompts</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Section -->
+  <section id="work" class="work">
+    <div class="container">
+      <h2>MY WORK</h2>
+      <div class="work-grid">
+        <div class="work-card">
+          <img src="../portfolio 2/image/devweb.jpg" alt="Projet Web" class="work-img">
+          <div class="work-content">
+            <h3>Projets Web</h3>
+            <p>Modern web applications, e-commerce sites, management platforms and tailor-made solutions</p>
+            <a href="work/web.html" target="_blank" class="work-btn">SEE MORE</a>
+          </div>
+        </div>
+        <div class="work-card">
+          <img src="../portfolio 2/image/graphic.jpg" alt="Design Graphique" class="work-img">
+          <div class="work-content">
+            <h3>Design Graphique</h3>
+            <p>Logos, advertising visuals, album covers, banners and illustrations</p>
+            <a href="work/design.html" target="_blank" class="work-btn">SEE MORE</a>
+          </div>
+        </div>
+        <div class="work-card">
+          <img src="../portfolio 2/image/video.jpg" alt="video editing" class="work-img">
+          <div class="work-content">
+            <h3>video editing</h3>
+            <p>custom made videos for all platforms and social medias</p>
+            <a href="work/video.html" target="_blank" class="work-btn">SEE MORE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>CONTACT ME</h2>
+      <p>Interested in my services? Feel free to contact me to discuss your project or ask questions.</p>
+      <div class="social-links">
+        <a href="mailto:maghnemkhaled@gmail.com" class="social-btn" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://wa.me/+213659350117" target="_blank" class="social-btn" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://linkedin.com/in/khaledmaghnem" target="_blank" class="social-btn" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/maghnemkhaled-17" target="_blank" class="social-btn" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://instagram.com/khaledmaghnem" target="_blank" class="social-btn" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://tiktok.com/@khaledmaghnem" target="_blank" class="social-btn" title="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; created by KHALED MAGHNEM |  all rights are reserved .</p>
+    </div>
+  </footer>
+</body>
+</html>
