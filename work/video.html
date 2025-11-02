@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Portfolio Vidéo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(135deg, #0a192f, #172a45);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #0a192f;
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-menu li a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+      font-size: 1.1rem;
+    }
+
+    .nav-menu li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #d4af37;
+      transition: width 0.3s;
+    }
+
+    .nav-menu li a:hover {
+      color: #d4af37;
+    }
+
+    .nav-menu li a:hover::after {
+      width: 100%;
+    }
+
+    /* SECTIONS */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 100px 20px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      color: #0a192f;
+      font-weight: 700;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: #d4af37;
+      border-radius: 2px;
+    }
+
+    /* GALLERY STYLES */
+    .video-grid {
+      display: grid;
+      gap: 30px;
+      justify-items: center;
+    }
+
+    /* Short videos : 4 par ligne */
+    .shorts-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Long videos : 2 par ligne */
+    .longs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mockup-container {
+      position: relative;
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .iphone-mockup {
+      width: 100%;
+      height: 500px;
+      background: url('https://cdn-icons-png.flaticon.com/512/732/732212.png') no-repeat center;
+      background-size: contain;
+    }
+
+    .iphone-screen {
+      position: absolute;
+      top: 50px;
+      left: 30px;
+      width: 190px;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .pc-mockup {
+      width: 100%;
+      height: 400px;
+      background: url('https://cdn-icons-png.flaticon.com/512/25/25628.png') no-repeat center;
+      background-size: contain;
+    }
+
+    .pc-screen {
+      position: absolute;
+      top: 60px;
+      left: 50px;
+      width: 500px;
+      height: 280px;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .mockup-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .shorts-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .longs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .shorts-grid {
+        grid-template-columns: 1fr;
+      }
+      .pc-screen {
+        width: 90%;
+        height: 60%;
+        top: 10%;
+        left: 5%;
+      }
+      .pc-mockup {
+        background-size: 100% 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Portfolio</div>
+      <ul class="nav-menu">
+        <li><a href="#shorts">Shorts</a></li>
+        <li><a href="#longs">Longs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Mes Vidéos</h1>
+    <p>Explorez mes créations vidéo, du court format au long format.</p>
+  </header>
+
+  <!-- SHORT VIDEOS SECTION -->
+  <section id="shorts" class="work">
+    <h2>Short Videos</h2>
+    <div class="video-grid shorts-grid">
+      <!-- 8 Shorts -->
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="iphone-mockup">
+          <div class="iphone-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+......
+    </div>
+  </section>
+
+  <!-- LONG VIDEOS SECTION -->
+  <section id="longs" class="work">
+    <h2>Long Videos</h2>
+    <div class="video-grid longs-grid">
+      <!-- 4 Longs - 2 par ligne -->
+      <div class="mockup-container">
+        <div class="pc-mockup">
+          <div class="pc-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="pc-mockup">
+          <div class="pc-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="pc-mockup">
+          <div class="pc-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="mockup-container">
+        <div class="pc-mockup">
+          <div class="pc-screen">
+            <video controls>
+              <source src="https://sample-videos.com/zip/10/mp4/sample-10s.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
